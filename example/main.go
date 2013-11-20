@@ -16,11 +16,15 @@ func listen(r broadcast.Receiver) {
 }
 
 func main() {
-	r := b.Listen()
+	r := b.Subscribe()
 	go listen(r)
+
+	// produce data
 	for i := 0; i < 10; i++ {
 		b.Write(i)
 	}
+
+	// EOF signal
 	b.Write(nil)
 
 	time.Sleep(3 * 1e9)
